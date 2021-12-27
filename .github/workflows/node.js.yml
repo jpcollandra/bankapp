@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+DB_Password: ${{secrets.DB_PASSWORD}}
+
 jobs:
   build:
 

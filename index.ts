@@ -33,12 +33,12 @@ app.get('/clients/:id', async (req, res)=>{
 
 })
 
-app.post('/clients/add', async (req, res)=>{
+app.post('/clients', async (req, res)=>{
 
     try {
         let associate: Account = req.body
         associate = await accountService.addAccount(associate)
-        res.sendStatus(201)
+        res.sendStatus(404)
         res.send(associate)      
     } catch (error) {
         errorHandler(error,req,res)
@@ -52,7 +52,7 @@ app.post('/clients/:id/account', async (req,res)=>{
     try {
         const account: Associate = req.body
         await accountService.addAssociateToAccount(req.params.id, account)
-        res.sendStatus(201)   
+        res.sendStatus(404)   
     } catch (error) {
         errorHandler(error,req,res)
     }

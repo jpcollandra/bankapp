@@ -20,12 +20,12 @@ export interface AccountDAO{
 
 }
 
-
+//process.env.DB ??
 class AccountDaoAzure implements AccountDAO{
 
-    private client = new CosmosClient(process.env.DB ?? 'AccountEndpoint=https://rpas-cosmosdb-account-jpakjr.documents.azure.com:443/;AccountKey=CosmosDBAuth==;')
+    private client = new CosmosClient(process.env.CosmosDBAuth)
     private database = this.client.database('Bank')
-    private container = this.database.container('Accounts')
+    private container = this.database.container('clients')
 
     async createAccount(account: Account): Promise<Account> {
         account.id = v4();
