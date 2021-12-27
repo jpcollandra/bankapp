@@ -30,8 +30,8 @@ class AccountDaoAzure implements AccountDAO{
     async createAccount(account: Account): Promise<Account> {
         account.id = v4();
         const response = await this.container.items.create<Account>(account)
-        const {id, name, associate} = response.resource;
-        return {id, name, associate}
+        const {id, accountType, associate} = response.resource;
+        return {id, accountType, associate}
     }
 
     async getAccountById(dId: string): Promise<Account> {
@@ -39,12 +39,12 @@ class AccountDaoAzure implements AccountDAO{
         if(!response.resource){
             throw new ResourceNotFoundError(`The resource with id ${dId} was not found`)
         }
-        return {id:response.resource.id, name: response.resource.name, associate:response.resource.associate}
+        return {id:response.resource.id, accountType: response.resource.accountType, associate:response.resource.associate}
     }
 
     async getAllAccount(): Promise<Account[]> {
         const response = await this.container.items.readAll<Account>().fetchAll()
-        return response.resources.map(i => ({associate: i.associate, id:i.id, name:i.name}))
+        return response.resources.map(i => ({associate: i.associate, id:i.id, accountType:i.accountType}))
     }
     
     async updateAccount(account: Account): Promise<Account> {
@@ -52,8 +52,8 @@ class AccountDaoAzure implements AccountDAO{
        if(!response.resource){
             throw new ResourceNotFoundError(`The resource with id ${account.id} was not found`)
        }
-       const {id, name, associate} = response.resource
-       return {id, name, associate}
+       const {id, accountType, associate} = response.resource
+       return {id, accountType, associate}
     }
 
     async deleteAccountById(id: string): Promise<boolean> {

@@ -11,7 +11,7 @@ app.use(Express.json())
 
 const accountService: AccountService = new AccountServiceImpl(accountDaoAzure)
 
-app.get('/associates', async (req, res) => {
+app.get('/clients', async (req, res) => {
 
     try {
         const associate: Account[] = await accountService.retrieveAllAccounts();
@@ -22,7 +22,7 @@ app.get('/associates', async (req, res) => {
     
 })
 
-app.get('/associates/:id', async (req, res)=>{
+app.get('/clients/:id', async (req, res)=>{
 
     try {
         const associate: Account = await accountService.retrieveAccountById(req.params.id)
@@ -33,7 +33,7 @@ app.get('/associates/:id', async (req, res)=>{
 
 })
 
-app.post('/associates', async (req, res)=>{
+app.post('/clients', async (req, res)=>{
 
     try {
         let associate: Account = req.body
@@ -47,7 +47,7 @@ app.post('/associates', async (req, res)=>{
 
 })
 
-app.post('/associates/:id/account', async (req,res)=>{
+app.post('/clients/:id/account', async (req,res)=>{
 
     try {
         const account: Associate = req.body

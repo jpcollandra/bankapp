@@ -10,7 +10,7 @@ describe('Account DAO Specs', ()=>{
 
 
     it('should create a account', async ()=>{
-        let account: Account = {name:'lakeside auto', id:'', associates:[]}
+        let account: Account = {accountType:'lakeside auto', id:'', associates:[]}
         account = await accountDao.createAccount(account)
         expect(account.id).not.toBe('')
         testId = account.id
@@ -18,16 +18,16 @@ describe('Account DAO Specs', ()=>{
 
     it('should get an account', async ()=>{
         const account: Account = await accountDao.getAccountById(testId)
-        expect(account.name).toBe('lakeside auto')
+        expect(account.accountType).toBe('lakeside auto')
     })
 
     it('should upsert an account', async ()=>{
         const associate: Associate = {make:'Subaru', model:'crosstrek', price:15000, year:2018, condition: "Used"}
-        let account: Account = {name:'lakeside auto v2', id:testId, associates:[associate]}
+        let account: Account = {accountType:'lakeside auto v2', id:testId, associates:[associate]}
         await accountDao.updateAccount(account)
         account = await  accountDao.getAccountById(testId)
         expect(account.associate.length).toBe(1)
-        expect(account.name).toBe('lakeside auto v2')
+        expect(account.accountType).toBe('lakeside auto v2')
     })
 
     it('should delete a account', async ()=>{

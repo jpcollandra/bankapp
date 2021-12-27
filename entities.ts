@@ -1,7 +1,7 @@
 export interface Associate{
 
-    fname: string
-    lname: string
+    faccountType: string
+    laccountType: string
     balance: number
 
 
@@ -10,7 +10,7 @@ export interface Associate{
 export interface Account{
 
     id: string
-    name: number
+    accountType: string
     associate: Associate[]    
 
 }
