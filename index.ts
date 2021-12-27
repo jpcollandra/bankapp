@@ -33,7 +33,7 @@ app.get('/clients/:id', async (req, res)=>{
 
 })
 
-app.post('/clients', async (req, res)=>{
+app.post('/clients/add', async (req, res)=>{
 
     try {
         let associate: Account = req.body
