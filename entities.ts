@@ -1,7 +1,7 @@
 export interface Associate{
 
-    faccountType: string
-    laccountType: string
+    fname: string
+    lname: string
     balance: number
 
 
