@@ -1,16 +1,14 @@
-export interface Associate{
+export interface Client{
 
     fname: string
     lname: string
-    balance: number
-
+    id: string  
+    account: Account[] 
 
 }
 
 export interface Account{
 
-    id: string
     accountType: string
-    associate: Associate[]    
-
+    balance: number
 }

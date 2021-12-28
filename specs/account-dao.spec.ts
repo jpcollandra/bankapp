@@ -1,8 +1,9 @@
-import { AccountDAO, accountDaoAzure } from "../daos/account-dao"
-import { Associate, Account } from "../entities";
+/*
+import { ClientDAO, clientDaoAzure } from "../daos/account-dao"
+import { Client, Account } from "../entities";
 
 
-const accountDao: AccountDAO = accountDaoAzure;
+const clientDao: ClientDAO = clientDaoAzure;
 
 let testId: string = null;
 
@@ -10,7 +11,7 @@ describe('Account DAO Specs', ()=>{
 
 
     it('should create a account', async ()=>{
-        let account: Account = {accountType:'checkings', id:'', associate:[]}
+        let client: Client = {accountType:'checkings', id:'', client:[]}
         account = await accountDao.createAccount(account)
         expect(account.id).not.toBe('')
         testId = account.id
@@ -22,11 +23,11 @@ describe('Account DAO Specs', ()=>{
     })
 
     it('should upsert an account', async ()=>{
-        const associate: Associate = {fname:'John', lname:'Doe', balance:15000}
-        let account: Account = {accountType:'savings', id:testId, associate:[associate]}
+        const client: Client = {fname:'John', lname:'Doe', balance:15000}
+        let account: Account = {accountType:'savings', id:testId, client:[client]}
         await accountDao.updateAccount(account)
         account = await  accountDao.getAccountById(testId)
-        expect(account.associate.length).toBe(1)
+        expect(account.client.length).toBe(1)
         expect(account.accountType).toBe('savings')
     })
 
@@ -34,4 +35,4 @@ describe('Account DAO Specs', ()=>{
         const response = await accountDao.deleteAccountById(testId);  
     })
 
-})
+}) */

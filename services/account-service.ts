@@ -1,46 +1,46 @@
-import { AccountDAO } from "../daos/account-dao";
-import { Associate, Account } from "../entities";
+import { ClientDAO } from "../daos/account-dao";
+import { Client, Account } from "../entities";
 
 // The service is used for business logic (rules applicable to to the real world) no negative ages, default values, etc...
 // Also useful for logging and other utilities
-export interface AccountService{
+export interface ClientService{
 
-    addAssociateToAccount(accountId: string, associate: Associate ):Promise<Account>
+    addAccountToClient(id: string, account: Account): Promise<Client>
 
-    retrieveAccountById(accountId: string): Promise<Account>
+    retrieveClientById(clientId: string): Promise<Client>
 
-    retrieveAllAccounts(): Promise<Account[]>;
+    retrieveAllClient(): Promise<Client[]>;
 
-    addAccount(account: Account): Promise<Account>
+    addClient(client: Client): Promise<Client>
 
 }
 
 
-export class AccountServiceImpl implements AccountService{
+export class ClientServiceImpl implements ClientService{
 
     // Dependency Injection allows us to swap the implementation of a dependency/property
-    constructor(private accountDAO: AccountDAO){}
+    constructor(private clientDAO: ClientDAO){}
 
-    async addAccount(account: Account): Promise<Account> {
-        account.associate = account.associate ?? []
-        account = await this.accountDAO.createAccount(account)
-        return account;
+    async addClient(client: Client): Promise<Client> {
+        client.account = client.account ?? []
+        client = await this.clientDAO.createClient(client)
+        return client;
     }
 
 
-    async retrieveAllAccounts(): Promise<Account[]> {
-        return this.accountDAO.getAllAccount() 
+    async retrieveAllClient(): Promise<Client[]> {
+        return this.clientDAO.getAllClient() 
     }
 
-    async retrieveAccountById(accountId: string): Promise<Account> {
-        return this.accountDAO.getAccountById(accountId)
+    async retrieveClientById(clientId: string): Promise<Client> {
+        return this.clientDAO.getClientById(clientId)
     }
     
-    async addAssociateToAccount(accountId: string, associate: Associate): Promise<Account> {
-        const account:Account = await this.accountDAO.getAccountById(accountId)
-        account.associate.push(associate)
-        await this.accountDAO.updateAccount(account)
-        return account
+    async addAccountToClient(id: string, account: Account): Promise<Client> {
+        const client:Client = await this.clientDAO.getClientById(id)
+        client.account.push(account)
+        await this.clientDAO.updateClient(client)
+        return client
     }
 
 }
