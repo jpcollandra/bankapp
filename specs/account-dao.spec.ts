@@ -16,23 +16,27 @@ describe('Client DAO Specs', ()=>{
         expect(client.id).not.toBe('')
         testId = client.id
     })
-/*
-    it('should get an account', async ()=>{
-        const account: Account = await accountDao.getAccountById(testId)
-        expect(account.accountType).toBe('checkings')
+
+    it('should client by id', async ()=>{
+        const client: Client = await clientDao.getClientById(testId)
+        expect(client.id).toBe('')
     })
 
-    it('should upsert an account', async ()=>{
-        const client: Client = {fname:'John', lname:'Doe', balance:15000}
-        let account: Account = {accountType:'savings', id:testId, client:[client]}
-        await accountDao.updateAccount(account)
-        account = await  accountDao.getAccountById(testId)
-        expect(account.client.length).toBe(1)
-        expect(account.accountType).toBe('savings')
+    it('get all clients', async ()=>{
+        const clients: Client[] = await clientDaoAzure.getAllClient();
+        expect(clients).toBeDefined
     })
+
+    it('should update account', async ()=>{
+        const updatedClient: Client = {fname:"John", lname:"Doe", id: "", account:[{accountType:"vacationfund", balance:3200}]}
+        await clientDao.updateClient(updatedClient);
+        const retrivedClient: Client = await clientDao.getClientById(updatedClient.id);
+        expect(retrivedClient.fname).toBe("Hansel")
+    })
+    })
+
 
     it('should delete a account', async ()=>{
-        const response = await accountDao.deleteAccountById(testId);  
+        const response = await clientDao.deleteClientById(testId);  
     })
- */
-})
+ 
