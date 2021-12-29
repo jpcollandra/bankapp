@@ -9,8 +9,10 @@ on:
   pull_request:
     branches: [ master ]
 
+//enviroment variable
 env:
 CosmosDBAuth: ${{secrets.CosmosDBAuth}}
+
 
 jobs:
   build:
