@@ -47,7 +47,6 @@ class ClientDaoAzure implements ClientDAO{
     }
     
     async updateClient(client: Client): Promise<Client> {
-       await this.getClientById(client.id)
        const response = await this.container.items.upsert<Client>(client);
        return response.resource;
     }

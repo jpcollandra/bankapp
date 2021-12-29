@@ -86,9 +86,30 @@ app.delete('/clients/:id', async (req, res)=>{
     })
 
 /*
+app.post('/clients/:id/accounts/:accountType', async (req, res)=>{
+    try {
+        const {id, accountType} = req.params;
+        const client: Client = await clientDaoAzure.getClientById(id)      
+        const newAccount : Account = await clientService.addAccountToClient( client.id, account.accountType)
+        res.status(201)
+        res.send(client)
+    } catch (error) {
+        if({instanceof : ResourceNotFoundError}){
+            res.status(404)
+            res.send("No Such Client Exists")
+        }
+            else{
+                res.status(500)
+            }
+        }
+})
+
+
+
     app.get('/clients/:id/accounts', async (req, res) =>{
         try {
-            const{amountLessThan, amountGreaterThan} = req.query
+            const{id} = req.params;
+
             res.send(account)
             res.status(200)
 
@@ -102,7 +123,7 @@ app.delete('/clients/:id', async (req, res)=>{
                 }
             }
         })
-*/
+
 
     app.patch('/clients/:id/accounts/:accountType/deposit', async (req, res) =>{
         try {
@@ -111,9 +132,13 @@ app.delete('/clients/:id', async (req, res)=>{
         console.log(id)
         const client: Client = await clientDaoAzure.getClientById(id)      
         const account: Account = await clientService.getAccountFromClient(client.account, accountType)
+        if(amount < 0){
+            console.log("Cannot Be Negative")
+        }else{
         account.balance += Number(amount);
         clientDaoAzure.updateClient(client);
         res.send("associate patch successfully");
+    }
     }catch (error) {
         if({instanceof : ResourceNotFoundError}){
             res.status(404)
@@ -133,8 +158,12 @@ app.delete('/clients/:id', async (req, res)=>{
         const client: Client = await clientDaoAzure.getClientById(id)      
         const account: Account = await clientService.getAccountFromClient(client.account, accountType)
         account.balance -= Number(amount);
+        if(account.balance < 0){
+        console.log("Negative Balance")
+         }else{
         clientDaoAzure.updateClient(client);
         res.send("associate patch successfully");
+    }
     }catch (error) {
         if({instanceof : ResourceNotFoundError}){
             res.status(404)
@@ -146,5 +175,5 @@ app.delete('/clients/:id', async (req, res)=>{
         }
     })
 
-
+*/
 app.listen(3000, () => console.log('App started'))
