@@ -4,8 +4,6 @@ import { Client, Account } from "./entities";
 import { ClientService, ClientServiceImpl } from "./services/account-service";
 import { ClientDAO, clientDaoAzure} from "./daos/account-dao";
 
-
-
 const app = Express(); 
 
 app.use(Express.json())
@@ -87,6 +85,7 @@ app.delete('/clients/:id', async (req, res)=>{
         }
     })
 
+/*
     app.get('/clients/:id/accounts', async (req, res) =>{
         try {
             const{amountLessThan, amountGreaterThan} = req.query
@@ -103,6 +102,7 @@ app.delete('/clients/:id', async (req, res)=>{
                 }
             }
         })
+*/
 
     app.patch('/clients/:id/accounts/:accountType/deposit', async (req, res) =>{
         try {
@@ -145,36 +145,6 @@ app.delete('/clients/:id', async (req, res)=>{
             }
         }
     })
-
-/*
-    app.get('/clients/:id/accounts?', async(req,res) =>{
-
-       try {
-            await clientDaoAzure.
-        } catch (error) {
-            if({instanceof : ResourceNotFoundError}){
-                res.status(404)
-                res.send("No Such Client Exists")
-            }
-                else{
-                    res.status(500)
-                }
-            }
-        })
-*/
-    
-/*
-app.post('/clients/:id/account', async (req,res)=>{
-
-    try {
-        const account: Client = req.body
-        await clientService.addClientToAccount(req.params.id, account)
-        res.sendStatus(404)   
-    } catch (error) {
-        errorHandler(error,req,res)
-    }
-})
-*/
 
 
 app.listen(3000, () => console.log('App started'))

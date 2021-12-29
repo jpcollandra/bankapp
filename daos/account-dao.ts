@@ -16,7 +16,7 @@ export interface ClientDAO{
     updateClient(client: Client): Promise<Client>
 
     //Delete
-    deleteClientById(id: string ): Promise<boolean>
+    deleteClientById(id: string ): Promise<Client>
 
 }
 
@@ -38,7 +38,7 @@ class ClientDaoAzure implements ClientDAO{
         if(!response.resource){
             throw new ResourceNotFoundError(`The resource with id ${dId} was not found`)
         }
-        return {id:response.resource.id, fname: response.resource.fname, lname: response.resource.lname, account:response.resource.account}
+        return {fname: response.resource.fname, lname: response.resource.lname, id:response.resource.id,account:response.resource.account}
     }
 
     async getAllClient(): Promise<Client[]> {
@@ -48,20 +48,14 @@ class ClientDaoAzure implements ClientDAO{
     
     async updateClient(client: Client): Promise<Client> {
        await this.getClientById(client.id)
-       const response = await this.container.items.upsert<Client>(client)
-       if(!response.resource){
-            throw new ResourceNotFoundError(`The resource with id ${client.id} was not found`)
-       }
-       return
+       const response = await this.container.items.upsert<Client>(client);
+       return response.resource;
     }
 
-    async deleteClientById(id: string): Promise<boolean> {
-       this.getAllClient(); 
+    async deleteClientById(id: string): Promise<Client> {
+       const client = await this.getClientById(id);
        const response = await this.container.item(id,id).delete();
-       if(!response.resource){
-            throw new ResourceNotFoundError(`The resource with id ${id} was not found`)
-        }
-       return true
+       return client;
     }
   
 }
