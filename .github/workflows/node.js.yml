@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 env:
-DB_Password: ${{secrets.DB_PASSWORD}}
+DB_Password: ${{secrets.CosmosDBAuth}}
 
 jobs:
   build:
