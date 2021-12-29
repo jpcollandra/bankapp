@@ -3,7 +3,8 @@ import errorHandler, { ResourceNotFoundError } from "./error-handles";
 import { Client, Account } from "./entities";
 import { ClientService, ClientServiceImpl } from "./services/account-service";
 import { ClientDAO, clientDaoAzure} from "./daos/account-dao";
-import { idText } from "typescript";
+
+
 
 const app = Express(); 
 
@@ -85,8 +86,83 @@ app.delete('/clients/:id', async (req, res)=>{
             }
         }
     })
-    
 
+    app.get('/clients/:id/accounts', async (req, res) =>{
+        try {
+            const{amountLessThan, amountGreaterThan} = req.query
+            res.send(account)
+            res.status(200)
+
+        } catch (error) {
+            if({instanceof : ResourceNotFoundError}){
+                res.status(404)
+                res.send("No Account Exists")
+            }
+                else{
+                    res.status(500)
+                }
+            }
+        })
+
+    app.patch('/clients/:id/accounts/:accountType/deposit', async (req, res) =>{
+        try {
+        const {id, accountType} = req.params;
+        const {amount} = req.body;
+        console.log(id)
+        const client: Client = await clientDaoAzure.getClientById(id)      
+        const account: Account = await clientService.getAccountFromClient(client.account, accountType)
+        account.balance += Number(amount);
+        clientDaoAzure.updateClient(client);
+        res.send("associate patch successfully");
+    }catch (error) {
+        if({instanceof : ResourceNotFoundError}){
+            res.status(404)
+            res.send("No Account Exists")
+        }
+            else{
+                res.status(500)
+            }
+        }
+    })
+
+    app.patch('/clients/:id/accounts/:accountType/withdraw', async (req,res) =>{
+        try {
+        const {id, accountType} = req.params;
+        const {amount} = req.body;
+        console.log(id)
+        const client: Client = await clientDaoAzure.getClientById(id)      
+        const account: Account = await clientService.getAccountFromClient(client.account, accountType)
+        account.balance -= Number(amount);
+        clientDaoAzure.updateClient(client);
+        res.send("associate patch successfully");
+    }catch (error) {
+        if({instanceof : ResourceNotFoundError}){
+            res.status(404)
+            res.send("No Account Exists")
+        }
+            else{
+                res.status(500)
+            }
+        }
+    })
+
+/*
+    app.get('/clients/:id/accounts?', async(req,res) =>{
+
+       try {
+            await clientDaoAzure.
+        } catch (error) {
+            if({instanceof : ResourceNotFoundError}){
+                res.status(404)
+                res.send("No Such Client Exists")
+            }
+                else{
+                    res.status(500)
+                }
+            }
+        })
+*/
+    
 /*
 app.post('/clients/:id/account', async (req,res)=>{
 

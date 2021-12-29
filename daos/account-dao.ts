@@ -34,7 +34,7 @@ class ClientDaoAzure implements ClientDAO{
     }
 
    async getClientById(dId: string): Promise<Client> {
-        const response = await this.container.item(dId, dId).read<Client>();// resource-key, partition-key (the same for most containers)
+        const response = await this.container.item(dId, dId).read<Client>();
         if(!response.resource){
             throw new ResourceNotFoundError(`The resource with id ${dId} was not found`)
         }
@@ -47,11 +47,12 @@ class ClientDaoAzure implements ClientDAO{
     }
     
     async updateClient(client: Client): Promise<Client> {
+       await this.getClientById(client.id)
        const response = await this.container.items.upsert<Client>(client)
        if(!response.resource){
             throw new ResourceNotFoundError(`The resource with id ${client.id} was not found`)
        }
-       return client
+       return
     }
 
     async deleteClientById(id: string): Promise<boolean> {

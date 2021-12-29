@@ -1,17 +1,19 @@
-import { ClientDAO } from "../daos/account-dao";
+import { ClientDAO, clientDaoAzure } from "../daos/account-dao";
 import { Client, Account } from "../entities";
 
 // The service is used for business logic (rules applicable to to the real world) no negative ages, default values, etc...
 // Also useful for logging and other utilities
 export interface ClientService{
 
-    addAccountToClient(id: string, account: Account): Promise<Client>
+    addAccountToClient(id: string, account: Account): Promise<Client>;
 
-    retrieveClientById(clientId: string): Promise<Client>
+    retrieveClientById(clientId: string): Promise<Client>;
 
     retrieveAllClient(): Promise<Client[]>;
 
-    addClient(client: Client): Promise<Client>
+    addClient(client: Client): Promise<Client>;
+
+    getAccountFromClient(account : Account[], accountType: string): Promise<Account>;
 
 }
 
@@ -34,6 +36,14 @@ export class ClientServiceImpl implements ClientService{
 
     async retrieveClientById(clientId: string): Promise<Client> {
         return this.clientDAO.getClientById(clientId)
+    }
+
+    async getAccountFromClient(account : Account[], accountType: string): Promise<Account> {
+        for(const acc of account){
+          if(acc.accountType == accountType)
+          return acc;
+        }
+
     }
     
     async addAccountToClient(id: string, account: Account): Promise<Client> {

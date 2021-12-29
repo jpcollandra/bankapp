@@ -1,4 +1,4 @@
-/*
+
 import { ClientDAO, clientDaoAzure } from "../daos/account-dao"
 import { Client, Account } from "../entities";
 
@@ -7,16 +7,16 @@ const clientDao: ClientDAO = clientDaoAzure;
 
 let testId: string = null;
 
-describe('Account DAO Specs', ()=>{
+describe('Client DAO Specs', ()=>{
 
 
     it('should create a account', async ()=>{
-        let client: Client = {accountType:'checkings', id:'', client:[]}
-        account = await accountDao.createAccount(account)
-        expect(account.id).not.toBe('')
-        testId = account.id
+        let client: Client = {fname:"John", lname:"Doe", id:'', account:[]}
+        client = await clientDaoAzure.createClient(client)
+        expect(client.id).not.toBe('')
+        testId = client.id
     })
-
+/*
     it('should get an account', async ()=>{
         const account: Account = await accountDao.getAccountById(testId)
         expect(account.accountType).toBe('checkings')
@@ -34,5 +34,5 @@ describe('Account DAO Specs', ()=>{
     it('should delete a account', async ()=>{
         const response = await accountDao.deleteAccountById(testId);  
     })
-
-}) */
+ */
+})
